@@ -1,33 +1,69 @@
 @import "../../_globalColor";
 
+/* ---------- Page containers ---------- */
 .main {
   width: 90%;
   padding: 20px 10px;
-  margin: 0px auto;
+  margin: 0 auto;
   margin-top: 4rem;
 }
+
 .greet-main {
   width: 90%;
   padding: 20px 10px;
-  margin: 0px auto;
+  margin: 0 auto;
   margin-top: 2rem;
 }
 
+/* ---------- Grid layout for greeting section ---------- */
 .greeting-main {
-  display: flex;
+  /* Two columns: left wider than right; two rows: hero + about */
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 48px;
+  align-items: start;
 }
 
+/* Place items explicitly in the grid */
+.greeting-text-div {
+  grid-column: 1;
+  grid-row: 1 / span 2; /* left column spans hero + about */
+}
+
+.greeting-image-div {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+}
+
+.about-me {
+  grid-column: 1;
+  grid-row: 2;
+  background: transparent;
+  border-radius: 8px;
+  margin-top: 40px;
+  padding-top: 16px;
+  display: block; /* paragraphs stack naturally */
+  gap: 24px;
+}
+
+.about-me-content {
+  flex: 1 1 0; /* harmless for legacy; no effect in grid */
+}
+
+.about-me-photo {
+  grid-column: 2; /* put photo in the white space to the right */
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin-top: 40px;
+}
+
+/* ---------- General text + buttons ---------- */
 .subTitle {
   color: $subTitle !important;
-}
-
-.greeting-main {
-  display: flex;
-}
-
-.greeting-main > * {
-  flex: 1;
-  margin-bottom: 30px;
 }
 
 .empty-div {
@@ -37,15 +73,133 @@
 .button-greeting-div {
   display: flex;
   margin-top: 40px;
+  gap: 16px;
 }
+
 .download-link-button {
   text-decoration: none;
 }
 
+/* ---------- About Me typography ---------- */
+.about-me-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.about-me-text {
+  line-height: 1.7;
+  margin: 0 0 12px 0;
+}
+
+/* ---------- Tech Stack Visual ---------- */
+.tech-stack-visual {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(108, 99, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(108, 99, 255, 0.1);
+}
+
+.tech-stack-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: $textColor;
+}
+
+.tech-stack-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tech-category {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tech-category-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $subTitle;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-tag {
+  background: $buttonColor;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: darken($buttonColor, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+/* Dark mode styles for tech stack */
+.dark-mode .tech-stack-visual {
+  background: rgba(108, 99, 255, 0.1);
+  border-color: rgba(108, 99, 255, 0.2);
+}
+
+.dark-mode .tech-stack-title {
+  color: $textColorDark;
+}
+
+.dark-mode .tech-category-label {
+  color: $textColorDark;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tech-stack-visual {
+    margin-top: 20px;
+    padding: 16px;
+  }
+  
+  .tech-tags {
+    gap: 6px;
+  }
+  
+  .tech-tag {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
+.about-me-photo img {
+  width: 340px;   /* increased from 280px */
+  height: 340px;  /* keep it square for circular shape */
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* subtle hover effect for interactivity */
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* ---------- Greeting headline + subtitle ---------- */
 .greeting-text {
   font-size: 70px;
   line-height: 1.1;
   color: $textColor !important;
+  margin: 0 0 12px 0;
 }
 
 .greeting-text-p {
@@ -53,11 +207,13 @@
   line-height: 40px;
 }
 
+/* ---------- Illustration ---------- */
 .greeting-image-div > img {
   max-width: 100%;
   height: auto;
 }
 
+/* ---------- Wave emoji animation ---------- */
 .wave-emoji {
   animation-duration: 1.8s;
   animation-iteration-count: infinite;
@@ -67,38 +223,29 @@
 }
 
 @keyframes wave {
-  0% {
-    transform: rotate(0deg);
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(-10deg); }
+  20% { transform: rotate(12deg); }
+  30% { transform: rotate(-10deg); }
+  40% { transform: rotate(9deg); }
+  50%, 100% { transform: rotate(0deg); }
+}
+
+/* ---------- Responsive ---------- */
+
+/* Large tablets: stack grid for safety */
+@media (max-width: 1024px) {
+  .greeting-main {
+    display: block; /* stack everything vertically */
   }
-  10% {
-    transform: rotate(-10deg);
-  }
-  20% {
-    transform: rotate(12deg);
-  }
-  30% {
-    transform: rotate(-10deg);
-  }
-  40% {
-    transform: rotate(9deg);
-  }
-  50% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(0deg);
+  .about-me-photo {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0 0 0;
   }
 }
 
-/* Media Query */
-@media (max-width: 1380px) {
-  .greeting-text {
-    font-size: 50px;
-  }
-  .greeting-text-p {
-    font-size: 20px;
-  }
-}
+/* Phones */
 @media (max-width: 768px) {
   .button-greeting-div {
     justify-content: space-around;
@@ -112,7 +259,7 @@
     line-height: normal;
     text-align: center;
   }
-  .greeting-main {
+  .about-me {
     display: block;
   }
   .greeting-image-div {
@@ -120,6 +267,17 @@
   }
 }
 
+/* Slightly smaller desktops */
+@media (max-width: 1380px) {
+  .greeting-text {
+    font-size: 50px;
+  }
+  .greeting-text-p {
+    font-size: 20px;
+  }
+}
+
+/* Very small devices */
 @media (max-width: 320px) {
   .main {
     width: auto;

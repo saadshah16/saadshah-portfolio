@@ -17,12 +17,17 @@ import {
 function Header() {
   const {isDark} = useContext(StyleContext);
   const viewExperience = workExperiences.display;
-  const viewOpenSource = openSource.display;
+  const viewOpenSource = false; // force hide Open Source from navbar
   const viewSkills = skillsSection.display;
   const viewAchievement = achievementSection.display;
   const viewBlog = blogSection.display;
   const viewTalks = talkSection.display;
   const viewResume = resumeSection.display;
+
+  const setActive = id => {
+    const el = document.querySelector(id);
+    return el && el.getBoundingClientRect().top < 120;
+  };
 
   return (
     <Headroom>
@@ -43,19 +48,15 @@ function Header() {
         <ul className={isDark ? "dark-menu menu" : "menu"}>
           {viewSkills && (
             <li>
-              <a href="#skills">Skills</a>
+              <a href="#skills" className={setActive("#skills") ? "active" : ""}>Skills</a>
             </li>
           )}
           {viewExperience && (
             <li>
-              <a href="#experience">Work Experiences</a>
+              <a href="#experience" className={setActive("#experience") ? "active" : ""}>Work Experiences</a>
             </li>
           )}
-          {viewOpenSource && (
-            <li>
-              <a href="#opensource">Open Source</a>
-            </li>
-          )}
+          {/* Open Source hidden */}
           {viewAchievement && (
             <li>
               <a href="#achievements">Achievements</a>
@@ -73,11 +74,14 @@ function Header() {
           )}
           {viewResume && (
             <li>
-              <a href="#resume">Resume</a>
+              <a href="#resume" className={setActive("#resume") ? "active" : ""}>Resume</a>
             </li>
           )}
           <li>
-            <a href="#contact">Contact Me</a>
+            <a href="#about" className={setActive("#about") ? "active" : ""}>About Me</a>
+          </li>
+          <li>
+            <a href="#contact" className={setActive("#contact") ? "active" : ""}>Contact Me</a>
           </li>
           <li>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

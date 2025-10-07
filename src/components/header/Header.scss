@@ -43,11 +43,23 @@
   padding: 15px 20px;
   color: $textColor;
   text-decoration: none;
+  position: relative;
 }
 
 .header li a:hover,
 .header .menu-btn:hover {
   background-color: $headerHoverBG;
+}
+
+.header li a.active::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 8px;
+  height: 2px;
+  background: $buttonColor;
+  border-radius: 2px;
 }
 
 .header .logo {
