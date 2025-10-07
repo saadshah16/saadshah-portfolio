@@ -32,9 +32,13 @@
 }
 
 .greeting-image-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-column: 2;
   grid-row: 1;
   align-self: end;
+  margin-top: -360px;
 }
 
 .about-me {
@@ -58,7 +62,7 @@
   display: flex;
   justify-content: center;
   align-items: start;
-  margin-top: 40px;
+  margin-top: 200px;
 }
 
 /* ---------- General text + buttons ---------- */
