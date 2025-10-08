@@ -159,7 +159,7 @@ export default function Greeting() {
           <div className="about-me-photo">
             <img
               alt="Saad Shah"
-              src={require("../../assets/images/profile.jpg")}
+              src={require("../../assets/images/profile.png")}
             />
           </div>
         </div>
