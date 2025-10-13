@@ -3,10 +3,10 @@ const https = require("https");
 process = require("process");
 require("dotenv").config();
 
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-const GITHUB_USERNAME = process.env.GITHUB_USERNAME;
-const USE_GITHUB_DATA = process.env.USE_GITHUB_DATA;
-const MEDIUM_USERNAME = process.env.MEDIUM_USERNAME;
+const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN || "";
+const GITHUB_USERNAME = process.env.GITHUB_USERNAME || "";
+const USE_GITHUB_DATA = process.env.USE_GITHUB_DATA || "false";
+const MEDIUM_USERNAME = process.env.MEDIUM_USERNAME || "";
 
 const ERR = {
   noUserName:
@@ -16,10 +16,10 @@ const ERR = {
   requestFailedMedium:
     "The request to Medium didn't succeed. Check if Medium username in your .env file is correct."
 };
-if (USE_GITHUB_DATA === "true") {
-  if (GITHUB_USERNAME === undefined) {
-    throw new Error(ERR.noUserName);
-  }
+if (USE_GITHUB_DATA === "true" && GITHUB_USERNAME) {
+  if (!GITHUB_USERNAME) {
+    console.log("GitHub username not provided, skipping GitHub data fetch");
+  } else {
 
   console.log(`Fetching profile data for ${GITHUB_USERNAME}`);
   var data = JSON.stringify({
@@ -92,9 +92,12 @@ if (USE_GITHUB_DATA === "true") {
 
   req.write(data);
   req.end();
+  }
+} else {
+  console.log("GitHub data fetching disabled or username not provided");
 }
 
-if (MEDIUM_USERNAME !== undefined) {
+if (MEDIUM_USERNAME) {
   console.log(`Fetching Medium blogs data for ${MEDIUM_USERNAME}`);
   const options = {
     hostname: "api.rss2json.com",
@@ -127,4 +130,6 @@ if (MEDIUM_USERNAME !== undefined) {
   });
 
   req.end();
+} else {
+  console.log("Medium username not provided, skipping Medium data fetch");
 }
